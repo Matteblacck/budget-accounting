@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+.navbar-brand{
+    font-family: "Bona Nova SC";
+}
+
+
+.delete-btn {
+    border: none;
+    background-color: #f5f5f5; /* светлый фон */
+    color: black; /* можно использовать красный оттенок текста для акцента */
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #f2dede; /* немного темнее при наведении */
+}
+
+.category-stat{
+    font-size: 20px;
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приложение для учета личного бюджета</title>
+    
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Подключение кастомного стиля -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<header class="header">
+     <!-- Навигация -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light row pl-5">
+        <a class="navbar-brand" href="#">Личный бюджет</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link section-btn" href="#" data-section="manage">Управление расходами</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link section-btn" href="#" data-section="stats">Статистика</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link section-btn d-none" href="#" data-section="settings">Настройки</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <!-- Основной контейнер -->
+    <div class="container mt-4">
+        <!-- Секция главной страницы -->
+        <section id="manage" class="section d-none">
+            <h2>Управление расходами</h2>
+            <form class="transaction-forms">
+                <div class="transaction-name form-group">
+                    <label for="transaction-name">Название</label>
+                    <input type="text" id="transaction-name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction-amount">Сумма</label>
+                    <input type="number" id="transaction-amount" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-category">Категория</label>
+                    <select id="transaction-category" class="form-control">
+                        <option value="" disabled selected>Выберите категорию</option>
+                        <option value="Рестораны и кафе">Рестораны и кафе</option>
+                        <option value="Продукты">Продукты</option>
+                        <option value="Транспорт">Транспорт</option>
+                        <option value="Развлечения">Развлечения</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+            <div class="filter mt-3">
+                <div class="filter">
+                    <label for="days-filter">Отобразить за последние:</label>
+                    <input type="number" id="days-filter" name="days" min="1" placeholder="Введите дни">
+                    <button id="apply-filter" class="btn btn-primary">Применить фильтр</button>
+                    <button id="delete-filter" class="btn btn-secondory">Сбросить фильтр</button>
+                  </div>
+            </div>
+            <div class="table-wrapper mt-5">
+                <h3>Список расходов</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Название</th>
+                            <th>Категория</th>
+                            <th>Сумма</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-list">
+                        <!-- Динамически добавляемые строки -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+
+
+        <!-- Секция статистики -->
+        <section id="stats" class="section d-none">
+            <h2>Статистика</h2>
+            <div>
+                <p>Общие расходы: <span id="total-expense">0</span> ₽</p>
+            </div>
+            <div class="form-group">
+                <label for="transaction-category-stat">Категория</label>
+                <select id="transaction-category-stat" class="form-control">
+                    <option value="" disabled selected>Выберите категорию</option>
+                    <option value="Рестораны и кафе">Рестораны и кафе</option>
+                    <option value="Продукты">Продукты</option>
+                    <option value="Транспорт">Транспорт</option>
+                    <option value="Развлечения">Развлечения</option>
+                </select>
+            </div>
+            <div id="rests-expense" class="category-stat d-none">
+                <p>Рестораны и кафе: <span>0</span> ₽</p>
+            </div>
+            <div id="products-expense" class="category-stat d-none">
+                <p>Продукты: <span>0</span> ₽</p>
+            </div>
+            <div id="transport-expense" class="category-stat d-none">
+                <p>Транспорт: <span>0</span> ₽</p>
+            </div>
+            <div id="entertainment-expense" class="category-stat d-none">
+                <p>Развлечения: <span>0</span> ₽</p>
+            </div>
+
+            <div id="category-transaction-table" class="mt-4">
+                <h3>Транзакции по выбранной категории</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Название</th>
+                            <th>Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-list-category">
+                        <!-- Динамически добавляемые строки -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Секция настроек -->
+        <section id="settings" class="section d-none">
+            <h2>Настройки</h2>
+            <div class="form-group">
+                <label for="currency">Выбор валюты</label>
+                <select id="currency" class="form-control" aria-placeholder="Выберите категорию">
+                    <option value="RUB">Рубли</option>
+                    <option value="USD">Доллары</option>
+                    <option value="EUR">Евро</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Уведомления</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="notification-budget" checked>
+                    <label class="form-check-label" for="notification-budget">
+                        Уведомления о превышении бюджета
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="notification-due" checked>
+                    <label class="form-check-label" for="notification-due">
+                        Уведомления о предстоящих платежах
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-danger" id="reset-data">Сбросить данные</button>
+        </section>
+    </div>
+
+    <!-- Подключение jQuery и Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Подключение основного скрипта приложения -->
+    <script src="app.js"></script>
+    <script src="components/transActionsList.js"></script>
+</body>
+</html>
